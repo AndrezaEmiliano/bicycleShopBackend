@@ -3,7 +3,7 @@ import java.math.BigDecimal;
 public class Products {
 
     private String name;
-    private BigDecimal price; // comparar <0
+    private BigDecimal price;
     private ProductCategory productCategory;
     private Integer quantityProduct;
     private static int totalProduct;
@@ -15,13 +15,12 @@ public class Products {
     public Products (String name, BigDecimal price, ProductCategory productCategory, Integer quantityProduct) {
         Products.totalProduct++;
         this.name = name;
-////        if (price.intValue() < 0){
-////            System.out.println("O preço do produto não pode ser negativo");
-////        }
-////        else {
-////            ontinue;
-//        }
-        this.price = price;
+        if (price.intValue() >= 0) {
+            this.price = price;
+        }
+        else {
+            System.out.println("O preço do produto não pode ser negativo, portanto o preço não foi cadastrado");
+        }
         this.productCategory = productCategory;
         this.quantityProduct = quantityProduct;
     }
@@ -47,12 +46,11 @@ public class Products {
         return Products.totalProduct;
     }
 
-
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice() {
         this.price = price;
     }
     public void setProductCategory(ProductCategory productCategory) {
