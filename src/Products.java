@@ -15,16 +15,23 @@ public class Products {
     public Products (String name, BigDecimal price, ProductCategory productCategory, Integer quantityProduct) {
         Products.totalProduct++;
         this.name = name;
-        if (price.intValue() >= 0) {
-            this.price = price;
-        }
-        else {
-            System.out.println("O preço do produto não pode ser negativo, portanto o preço não foi cadastrado");
-        }
+        validatePrice (price);
         this.productCategory = productCategory;
         this.quantityProduct = quantityProduct;
     }
 
+
+    private void validatePrice (BigDecimal price) throws PriceException{
+        if (price.doubleValue() >=0){
+            this.price = price;
+        } else {
+            throw new PriceException ("O preço do produto não pode ser negativo! O preço atual do produto é " + getPrice());
+            }
+    }
+
+    public void setPrice(BigDecimal price) {
+        validatePrice(price);
+    }
 
     public String getName() {
         return this.name;
@@ -50,9 +57,6 @@ public class Products {
         this.name = name;
     }
 
-    public void setPrice() {
-        this.price = price;
-    }
     public void setProductCategory(ProductCategory productCategory) {
         this.productCategory = productCategory;
     }
@@ -61,25 +65,7 @@ public class Products {
         this.quantityProduct = quantityProduct;
     }
 
-
-    public void editName(String newName){
-        if(this.name == null){
-            System.out.println("Insira um nome para o produto!");
-            this.name = newName;
-            System.out.println("O nome do produto foi cadastrado com sucesso!");
-        }
-        else if(this.name != newName){
-            this.name = newName;
-            System.out.println("O nome do produto foi alterado com sucesso!");
-            }
-        else{
-            System.out.println("O nome do produto não foi alterado.");
-        }
-        System.out.println("O nome do produto é: " + getName());
-    }
-
-
-    public void discount (BigDecimal percentDiscount) {
+    public void setDiscount (BigDecimal percentDiscount) {
         this.price = (price.subtract ((price.multiply(percentDiscount)).divide(new BigDecimal(100))));
         System.out.println("O novo valor do produto com o desconto de " + percentDiscount + "% concedido é: R$" + getPrice());
     }
