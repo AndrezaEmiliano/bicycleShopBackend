@@ -1,18 +1,19 @@
 import java.math.BigDecimal;
 
-public class Order {
+public class Ordered {
 
-    private Client purchaser;
+    private Customer purchaser;
     private PaymentMethod paymentMethod;
     private Products product;
     private Integer quantity;
     private BigDecimal estimatedTotal;
+    private BigDecimal subtotalDiscount;
 
 
-    public Order() {
+    public Ordered() {
     }
 
-    public Order(Client purchaser, Products product, Integer quantity, PaymentMethod paymentMethod) {
+    public Ordered(Customer purchaser, Products product, Integer quantity, PaymentMethod paymentMethod) {
         this.purchaser = purchaser;
         this.product = product;
         this.quantity = quantity;
@@ -20,7 +21,7 @@ public class Order {
     }
 
 
-    public Client getPurchaser() {
+    public Customer getPurchaser() {
         return this.purchaser;
     }
 
@@ -36,12 +37,8 @@ public class Order {
         return quantity;
     }
 
-    public BigDecimal getEstimatedTotal() {
-            return estimatedTotal;
-    }
 
-
-    public void setPurchaser(Client purchaser) {
+    public void setPurchaser(Customer purchaser) {
         this.purchaser = purchaser;
     }
 
@@ -68,29 +65,23 @@ public class Order {
         }
     }
 
-    public void setEstimatedTotal () {
-        try{
+    public BigDecimal getEstimatedTotal () {
         if (this.decreaseQuantity()) {
-            this.estimatedTotal = this.getProduct().getPrice().multiply(new BigDecimal(this.getQuantity()));
+            this.estimatedTotal = (this.getProduct().getPrice().multiply(new BigDecimal(this.getQuantity())));
             this.paymentMethod.setValue(this.estimatedTotal);
         }
         else {
-            System.out.println("quantidade de produto insuficiênte");
+            System.out.println("A quantidade de produto é insuficiênte para esta compra!");
         }
-        }
-        catch(NullPointerException exception){
-            System.out.println("O preço do produto não está cadastrado");
-        }
+        return this.estimatedTotal;
     }
 
-    public void discountEstimatedTotal (BigDecimal percentDiscount) {
-        try{
-        BigDecimal subtotalDiscount = (getEstimatedTotal().subtract((getEstimatedTotal().multiply(percentDiscount)).divide(new BigDecimal(100))));
-        System.out.println("O novo valor do produto com o desconto de " + percentDiscount + "% concedido é: R$" + subtotalDiscount);
-        }
-        catch(NullPointerException exception){
-            System.out.println("O preço do produto não está cadastrado");
-        }
+    public void setSubtotalDiscount (Integer percentDiscount) {
+        this.subtotalDiscount = (getEstimatedTotal().subtract((getEstimatedTotal().multiply(BigDecimal.valueOf(percentDiscount))).divide(BigDecimal.valueOf(100))));
+        System.out.println("O novo valor do produto com o desconto de " + percentDiscount + "% concedido é: R$" + this.subtotalDiscount);
     }
 
+    public BigDecimal getSubtotalDiscount() {
+        return subtotalDiscount;
+    }
 }
