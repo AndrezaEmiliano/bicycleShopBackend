@@ -15,22 +15,17 @@ public class Products {
     public Products (String name, BigDecimal price, ProductCategory productCategory, Integer quantityProduct) {
         Products.totalProduct++;
         this.name = name;
-        validatePrice (price);
+        setPrice (price);
         this.productCategory = productCategory;
         this.quantityProduct = quantityProduct;
     }
 
 
-    private void validatePrice (BigDecimal price) throws PriceException{
-        if (price.doubleValue() >=0){
-            this.price = price;
-        } else {
-            throw new PriceException ("O preço do produto não pode ser negativo! O preço atual do produto é " + getPrice());
-            }
-    }
-
-    public void setPrice(BigDecimal price) {
-        validatePrice(price);
+    private void setPrice (BigDecimal price) throws PriceException {
+        if (price !=null && price.doubleValue() < 0) {
+            throw new PriceException("O preço do produto não pode ser negativo!");
+        }
+        this.price = price;
     }
 
     public String getName() {
@@ -66,7 +61,7 @@ public class Products {
     }
 
     public void setDiscount (BigDecimal percentDiscount) {
-        this.price = (price.subtract ((price.multiply(percentDiscount)).divide(new BigDecimal(100))));
+        this.price = (price.subtract ((price.multiply(percentDiscount)).divide(BigDecimal.valueOf(100))));
         System.out.println("O novo valor do produto com o desconto de " + percentDiscount + "% concedido é: R$" + getPrice());
     }
 }
