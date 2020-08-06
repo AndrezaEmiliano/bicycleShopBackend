@@ -1,7 +1,7 @@
 public class Address {
 
     private String zipCode;
-    private String stAve;
+    private String streetName;
     private String number;
     private String neighborhood;
     private String state;
@@ -11,9 +11,9 @@ public class Address {
     public Address() {
     }
 
-    public Address(String zipCode, String stAve, String number, String neighborhood, String state, String city, String complement) {
+    public Address(String zipCode, String streetName, String number, String neighborhood, String state, String city, String complement) {
         this.zipCode = zipCode;
-        this.stAve = stAve;
+        this.streetName = streetName;
         this.number = number;
         this.neighborhood = neighborhood;
         this.state = state;
@@ -26,8 +26,8 @@ public class Address {
         return zipCode;
     }
 
-    public String getStAve() {
-        return stAve;
+    public String getStreetName() {
+        return streetName;
     }
 
     public String getNumber() {
@@ -55,8 +55,8 @@ public class Address {
         this.zipCode = zipCode;
     }
 
-    public void setStAve(String stAve) {
-        this.stAve = stAve;
+    public void setStreetName(String streetName) {
+        this.streetName = streetName;
     }
 
     public void setNumber(String number) {
