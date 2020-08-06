@@ -1,31 +1,28 @@
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class Invoice extends PaymentMethod {
 
-    private long barcode;
-    private Client client;
+    private String barcode;
+    private Customer customer;
     private LocalDate deadline;
 
 
-    public Invoice(BigDecimal flexPaymentNumber) {
-        super(flexPaymentNumber);
+    public Invoice() {
     }
 
-    public Invoice(long barcode, Client client, LocalDate deadline, BigDecimal flexPaymentNumber) {
-        super(flexPaymentNumber);
+    public Invoice(String barcode, Customer customer, LocalDate deadline) {
         this.barcode = barcode;
-        this.client = client;
+        this.customer = customer;
         this.deadline = LocalDate.now().plusDays(2);
     }
 
 
-    public long getBarcode() {
+    public String getBarcode() {
         return barcode;
     }
 
-    public Client getClient() {
-        return client;
+    public Customer getCustomer() {
+        return customer;
     }
 
     public LocalDate getDeadline() {
@@ -33,12 +30,12 @@ public class Invoice extends PaymentMethod {
     }
 
 
-    public void setBarcode(long barcode) {
+    public void setBarcode(String barcode) {
         this.barcode = barcode;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setClient(Customer customer) {
+        this.customer = customer;
     }
 
     public void setDeadline(LocalDate deadline) {
