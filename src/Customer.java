@@ -1,11 +1,11 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class Client {
+public class Customer {
 
     private String name;
     private String surname;
-    private LocalDate dateBirth;
+    private LocalDate dateOfBirth;
     private String cpf;
     private String email;
     private String mainPhone;
@@ -14,19 +14,14 @@ public class Client {
     private static int total;
 
 
-    public Client() {
+    public Customer() {
     }
 
-    public Client (String name, String surname, LocalDate dateBirth, String cpf, String email, String mainPhone, String secondPhone, Address address){
-        Client.total++;
+    public Customer(String name, String surname, LocalDate dateOfBirth, String cpf, String email, String mainPhone, String secondPhone, Address address){
+        Customer.total++;
         this.name = name;
         this.surname = surname;
-        if (dateBirth.isBefore(LocalDate.now())){
-            this.dateBirth = dateBirth;
-        }
-        else {
-            System.out.println("A data de nascimento não é válida, favor edita-la");
-        }
+        setDateOfBirth(dateOfBirth);
         this.cpf = cpf;
         this.email = email;
         this.mainPhone = mainPhone;
@@ -43,20 +38,19 @@ public class Client {
         return surname;
     }
 
-    public LocalDate getDateBirth () {
-        return dateBirth;
+    public LocalDate getDateOfBirth () {
+        return dateOfBirth;
     }
 
-    public String getDateBirthFormatted () {
-        if (dateBirth != null){
-        return dateBirth.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    public String getDateOfBirthFormatted () {
+        if (dateOfBirth != null){
+        return dateOfBirth.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         }
         else{
             System.out.println("Data de nascimento não cadatrada");
             return null;
         }
     }
-
 
     public String getCpf() {
         return cpf;
@@ -69,7 +63,6 @@ public class Client {
     public String getMainPhone() {
         return mainPhone;
     }
-
 
     public String getSecondPhone() {
         return secondPhone;
@@ -92,12 +85,15 @@ public class Client {
         this.surname = surname;
     }
 
-    public void setDateBirth(LocalDate dateBirth) {
-        this.dateBirth = dateBirth;
+    public void setDateOfBirth(LocalDate dateOfBirth) throws DateException {
+        if (dateOfBirth != null && dateOfBirth.isAfter(LocalDate.now())) {
+            throw new DateException("A data de nascimento nao é válida");
+        }
+        this.dateOfBirth = dateOfBirth;
     }
 
-    public void setDateBirthFormatted(String dateBirth){
-        this.dateBirth = LocalDate.parse(dateBirth, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    public void setDateOfBirthFormatted(String dateOfBirth){
+        this.dateOfBirth = LocalDate.parse(dateOfBirth, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 
     public void setCpf(String cpf) {
