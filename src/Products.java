@@ -10,10 +10,11 @@ public class Products {
 
 
     public Products() {
+        Products.totalProduct++;
     }
 
     public Products (String name, BigDecimal price, ProductCategory productCategory, Integer quantityProduct) {
-        Products.totalProduct++;
+        this();
         this.name = name;
         setPrice (price);
         this.productCategory = productCategory;
@@ -22,7 +23,10 @@ public class Products {
 
 
     private void setPrice (BigDecimal price) throws PriceException {
-        if (price !=null && price.doubleValue() < 0) {
+        if (price == null) {
+            throw new PriceException("O preço do produto não pode ser nulo!");
+        }
+        if (price.doubleValue() < 0) {
             throw new PriceException("O preço do produto não pode ser negativo!");
         }
         this.price = price;
@@ -62,6 +66,5 @@ public class Products {
 
     public void setDiscount (BigDecimal percentDiscount) {
         this.price = (price.subtract ((price.multiply(percentDiscount)).divide(BigDecimal.valueOf(100))));
-        System.out.println("O novo valor do produto com o desconto de " + percentDiscount + "% concedido é: R$" + getPrice());
     }
 }
