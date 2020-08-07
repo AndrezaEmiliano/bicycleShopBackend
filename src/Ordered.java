@@ -18,6 +18,7 @@ public class Ordered {
         this.product = product;
         this.quantity = quantity;
         this.paymentMethod = paymentMethod;
+        getEstimatedTotal();
     }
 
 
@@ -65,20 +66,29 @@ public class Ordered {
         }
     }
 
-    public BigDecimal getEstimatedTotal () {
+    private BigDecimal getEstimatedTotal () throws QuantatyException{
         if (this.decreaseQuantity()) {
-            this.estimatedTotal = (this.getProduct().getPrice().multiply(new BigDecimal(this.getQuantity())));
+            this.estimatedTotal = (this.getProduct().getPrice().multiply(BigDecimal.valueOf(this.getQuantity())));
             this.paymentMethod.setValue(this.estimatedTotal);
+            return this.estimatedTotal;
         }
         else {
-            System.out.println("A quantidade de produto é insuficiênte para esta compra!");
+            throw new QuantatyException("A quantidade de produto é insuficiênte para esta compra!");
         }
+    }
+
+    public BigDecimal getEstimatedTotalValue (){
         return this.estimatedTotal;
     }
 
+    public void setEstimatedTotal(BigDecimal estimatedTotal) {
+        this.estimatedTotal = estimatedTotal;
+        this.paymentMethod.setValue(this.estimatedTotal);
+    }
+
     public void setSubtotalDiscount (Integer percentDiscount) {
-        this.subtotalDiscount = (getEstimatedTotal().subtract((getEstimatedTotal().multiply(BigDecimal.valueOf(percentDiscount))).divide(BigDecimal.valueOf(100))));
-        System.out.println("O novo valor do produto com o desconto de " + percentDiscount + "% concedido é: R$" + this.subtotalDiscount);
+        this.subtotalDiscount = (getEstimatedTotalValue().subtract((getEstimatedTotalValue().multiply(BigDecimal.valueOf(percentDiscount))).divide(BigDecimal.valueOf(100))));
+        setEstimatedTotal(getSubtotalDiscount());
     }
 
     public BigDecimal getSubtotalDiscount() {
