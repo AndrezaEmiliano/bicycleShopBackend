@@ -56,25 +56,18 @@ public class Ordered {
     }
 
 
-    public boolean decreaseQuantity(){
-        if (this.product.getQuantityProduct() >= this.quantity){
-            this.product.setQuantityProduct(this.product.getQuantityProduct()-this.quantity);
-            return true;
+    public void setDecreaseQuantity() throws QuantityException {
+        if (this.product.getQuantityProduct() < this.quantity || this.product.getQuantityProduct() == null){
+            throw new QuantityException("A quantidade de produto é insuficiênte para esta compra!");
         }
-        else {
-            return false;
-        }
+        this.product.setQuantityProduct(this.product.getQuantityProduct()-this.quantity);
     }
 
-    private BigDecimal getEstimatedTotal () throws QuantatyException{
-        if (this.decreaseQuantity()) {
-            this.estimatedTotal = (this.getProduct().getPrice().multiply(BigDecimal.valueOf(this.getQuantity())));
-            this.paymentMethod.setValue(this.estimatedTotal);
-            return this.estimatedTotal;
-        }
-        else {
-            throw new QuantatyException("A quantidade de produto é insuficiênte para esta compra!");
-        }
+    private BigDecimal getEstimatedTotal () {
+        this.setDecreaseQuantity();
+        this.estimatedTotal = (this.getProduct().getPrice().multiply(BigDecimal.valueOf(this.getQuantity())));
+        this.paymentMethod.setValue(this.estimatedTotal);
+        return this.estimatedTotal;
     }
 
     public BigDecimal getEstimatedTotalValue (){
