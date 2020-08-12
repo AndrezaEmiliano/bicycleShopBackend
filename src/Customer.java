@@ -15,10 +15,10 @@ public class Customer {
 
 
     public Customer() {
+        Customer.total++;
     }
 
     public Customer(String name, String surname, LocalDate dateOfBirth, String cpf, String email, String mainPhone, String secondPhone, Address address){
-        Customer.total++;
         this.name = name;
         this.surname = surname;
         setDateOfBirth(dateOfBirth);
@@ -43,13 +43,7 @@ public class Customer {
     }
 
     public String getDateOfBirthFormatted () {
-        if (dateOfBirth != null){
         return dateOfBirth.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        }
-        else{
-            System.out.println("Data de nascimento não cadatrada");
-            return null;
-        }
     }
 
     public String getCpf() {
@@ -86,7 +80,9 @@ public class Customer {
     }
 
     public void setDateOfBirth(LocalDate dateOfBirth) throws DateException {
-        if (dateOfBirth != null && dateOfBirth.isAfter(LocalDate.now())) {
+        if (dateOfBirth == null ) {
+            throw new DateException("A data de nascimento nao pode ser nula!");
+        if (dateOfBirth.isAfter(LocalDate.now())) {
             throw new DateException("A data de nascimento nao é válida");
         }
         this.dateOfBirth = dateOfBirth;
