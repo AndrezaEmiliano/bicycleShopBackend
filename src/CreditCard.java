@@ -27,7 +27,10 @@ public class CreditCard extends PaymentMethod {
     }
 
     public LocalDate getExpDate() throws ExpDateException{
-        if (expDate != null && expDate.isBefore(LocalDate.now())){
+        if (expDate == null){
+            throw new ExpDateException("O cartão não pode ter a data de validade nula.");
+        }
+        if (expDate.isBefore(LocalDate.now())){
             throw new ExpDateException("O cartão está com a validade expirada");
         }
         return expDate;
