@@ -1,16 +1,16 @@
 import java.time.LocalDate;
 
-public class Invoice extends PaymentMethod {
+public class BankSlip extends PaymentMethod {
 
     private String barcode;
     private Customer customer;
     private LocalDate deadline;
 
 
-    public Invoice() {
+    public BankSlip() {
     }
 
-    public Invoice(String barcode, Customer customer, LocalDate deadline) {
+    public BankSlip(String barcode, Customer customer, LocalDate deadline) {
         this.barcode = barcode;
         this.customer = customer;
         this.deadline = LocalDate.now().plusDays(2);
