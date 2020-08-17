@@ -1,6 +1,6 @@
 import java.math.BigDecimal;
 
-public class Ordered {
+public class Order {
 
     private Customer purchaser;
     private PaymentMethod paymentMethod;
@@ -10,10 +10,10 @@ public class Ordered {
     private BigDecimal subtotalDiscount;
 
 
-    public Ordered() {
+    public Order() {
     }
 
-    public Ordered(Customer purchaser, Products product, Integer quantity, PaymentMethod paymentMethod) {
+    public Order(Customer purchaser, Products product, Integer quantity, PaymentMethod paymentMethod) {
         this.purchaser = purchaser;
         this.product = product;
         this.quantity = quantity;
