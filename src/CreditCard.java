@@ -26,13 +26,7 @@ public class CreditCard extends PaymentMethod {
         return cardNumber;
     }
 
-    public LocalDate getExpDate() throws ExpDateException{
-        if (expDate == null){
-            throw new ExpDateException("O cartão não pode ter a data de validade nula.");
-        }
-        if (expDate.isBefore(LocalDate.now())){
-            throw new ExpDateException("O cartão está com a validade expirada");
-        }
+    public LocalDate getExpDate() {
         return expDate;
     }
 
@@ -53,9 +47,16 @@ public class CreditCard extends PaymentMethod {
         this.cardNumber = cardNumber;
     }
 
-    public void setExpDate(LocalDate expDate) {
+    public void setExpDate(LocalDate expDate) throws ExpDateException{
+        if (expDate == null){
+            throw new ExpDateException("O cartão não pode ter a data de validade nula.");
+        }
+        if (expDate.isBefore(LocalDate.now())){
+            throw new ExpDateException("O cartão está com a validade expirada");
+        }
         this.expDate = expDate;
     }
+
 
     public void setCvv(int cvv) {
         this.cvv = cvv;
