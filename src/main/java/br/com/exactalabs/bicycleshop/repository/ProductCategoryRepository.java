@@ -5,6 +5,7 @@ import br.com.exactalabs.bicycleshop.entity.ProductCategory;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Collections;
 
 public class ProductCategoryRepository {
 
@@ -81,7 +82,7 @@ public class ProductCategoryRepository {
     }
 
     public Collection<ProductCategory> findAll() {
-
+        return Collections.emptyList();
     }
 
 }
