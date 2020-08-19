@@ -2,7 +2,7 @@ import java.math.BigDecimal;
 
 public class Order {
 
-    private Customer purchaser;
+    private Customer customer;
     private PaymentMethod paymentMethod;
     private Products product;
     private Integer quantity;
@@ -13,8 +13,8 @@ public class Order {
     public Order() {
     }
 
-    public Order(Customer purchaser, Products product, Integer quantity, PaymentMethod paymentMethod) {
-        this.purchaser = purchaser;
+    public Order(Customer customer, Products product, Integer quantity, PaymentMethod paymentMethod) {
+        this.customer = customer;
         this.product = product;
         this.quantity = quantity;
         this.paymentMethod = paymentMethod;
@@ -22,8 +22,8 @@ public class Order {
     }
 
 
-    public Customer getPurchaser() {
-        return this.purchaser;
+    public Customer getCustomer() {
+        return this.customer;
     }
 
     public PaymentMethod getPaymentMethod() {
@@ -39,8 +39,8 @@ public class Order {
     }
 
 
-    public void setPurchaser(Customer purchaser) {
-        this.purchaser = purchaser;
+    public void setCustomer(Customer customer) {
+        this.customer = customerr;
     }
 
     public void setPaymentMethod(PaymentMethod paymentMethod) {
