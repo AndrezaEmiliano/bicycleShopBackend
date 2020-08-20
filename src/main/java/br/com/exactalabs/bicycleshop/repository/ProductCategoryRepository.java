@@ -4,6 +4,7 @@ import br.com.exactalabs.bicycleshop.entity.ProductCategory;
 
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -50,15 +51,9 @@ public class ProductCategoryRepository {
             ResultSet result = stmt.executeQuery();
 
             while (result.next()) {
-                Long idResult = result.getLong("id");
-                String descriptionResult = result.getString("description");
-                Date createdAtResult = result.getDate("created_at");
 
+                ProductCategory productCategory = this.createCategory(result);
                 result.close();
-
-                ProductCategory productCategory = new ProductCategory();
-                productCategory.setId(idResult);
-                productCategory.setName(descriptionResult);
 
                 return productCategory;
             }
@@ -77,12 +72,50 @@ public class ProductCategoryRepository {
 
     }
 
-    public void delete() {
+    public void delete(Long id) {
+        try {
+            var sql = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
 
+            var stmt = connection.prepareStatement(sql);
+            stmt.setLong(1, id);
+
+            stmt.execute();
+            stmt.close();
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     public Collection<ProductCategory> findAll() {
-        return Collections.emptyList();
+        var productCategories = new ArrayList<ProductCategory>();
+        try {
+            String sql = "SELECT * FROM " + TABLE_NAME;
+
+            PreparedStatement stmt = this.connection.prepareStatement(sql);
+
+            ResultSet result = stmt.executeQuery();
+
+            while (result.next()) {
+                productCategories.add(this.createCategory(result));
+            }
+            result.close();
+
+            return productCategories;
+
+
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    private ProductCategory createCategory(ResultSet result) throws SQLException {
+        var idResult = result.getLong("id");
+        var descriptionResult = result.getString("description");
+
+        var productCategory = new ProductCategory();
+        productCategory.setId(idResult);
+        productCategory.setName(descriptionResult);
+        return productCategory;
     }
 
 }

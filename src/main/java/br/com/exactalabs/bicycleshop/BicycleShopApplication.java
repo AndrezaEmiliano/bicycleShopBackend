@@ -21,6 +21,11 @@ public class BicycleShopApplication {
         System.out.println("ID Categoria: " +categoriaA.getId());
         System.out.println("Nome categoria: " + categoriaA.getName());
 
+        productCategoryRepository.delete(1L);
+
+        var categoriaA2 = productCategoryRepository.findById(1L);
+        System.out.println("ID Categoria: " +categoriaA2);
+
         //productCategoryRepository.batchInsert(categories);
 
 
