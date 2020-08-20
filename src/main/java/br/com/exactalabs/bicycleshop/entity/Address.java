@@ -1,3 +1,5 @@
+package br.com.exactalabs.bicycleshop.entity;
+
 public class Address {
 
     private String zipCode;

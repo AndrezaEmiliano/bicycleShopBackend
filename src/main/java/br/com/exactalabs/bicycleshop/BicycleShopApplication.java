@@ -3,6 +3,7 @@ package br.com.exactalabs.bicycleshop;
 import br.com.exactalabs.bicycleshop.entity.ProductCategory;
 import br.com.exactalabs.bicycleshop.repository.ProductCategoryRepository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,23 +11,13 @@ public class BicycleShopApplication {
 
     public static void main(String[] args) {
 
-//        var categories = List.of(
-//                new ProductCategory("categoria X"),
-//                new ProductCategory("cateogira Y"),
-//                new ProductCategory("categoria Z"));
-
         var productCategoryRepository = new ProductCategoryRepository();
+        var pageResult = productCategoryRepository.findAllPaged(2, 5);
 
-        var categoriaA = productCategoryRepository.findById(1L);
-        System.out.println("ID Categoria: " +categoriaA.getId());
-        System.out.println("Nome categoria: " + categoriaA.getName());
+        pageResult.getResults().forEach(productCategory -> {
+            System.out.println(productCategory.getName());
+        });
 
-        productCategoryRepository.delete(1L);
-
-        var categoriaA2 = productCategoryRepository.findById(1L);
-        System.out.println("ID Categoria: " +categoriaA2);
-
-        //productCategoryRepository.batchInsert(categories);
 
 
     }

@@ -7,6 +7,7 @@ public class ProductCategory {
     private Long id;
     private String name;
     private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public ProductCategory() {
     }
@@ -40,6 +41,21 @@ public class ProductCategory {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductCategory{" +
+                "id=" + id +
+                ", name='" + name + '\'' + '}';
     }
 
 }
