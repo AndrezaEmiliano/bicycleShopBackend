@@ -56,7 +56,13 @@ public class Order {
     }
 
 
-    public void setDecreaseQuantity() throws QuantityException {
+    public void decreaseQuantity() throws QuantityException {
+        if (this.product == null){
+            throw new QuantityException("Produto não cadastrado");
+        }
+        if (this.quantity == null){
+            throw new QuantityException("A quantidade de produto a ser comprada não é suficiente para esta compra");
+        }
         if (this.product.getQuantityProduct() < this.quantity || this.product.getQuantityProduct() == null){
             throw new QuantityException("A quantidade de produto é insuficiênte para esta compra!");
         }
@@ -64,7 +70,7 @@ public class Order {
     }
 
     private BigDecimal getEstimatedTotal () {
-        this.setDecreaseQuantity();
+        this.decreaseQuantity();
         this.estimatedTotal = (this.getProduct().getPrice().multiply(BigDecimal.valueOf(this.getQuantity())));
         this.paymentMethod.setValue(this.estimatedTotal);
         return this.estimatedTotal;
@@ -80,8 +86,8 @@ public class Order {
     }
 
     public void setSubtotalDiscount (Integer percentDiscount) {
-        this.subtotalDiscount = (getEstimatedTotalValue().subtract((getEstimatedTotalValue().multiply(BigDecimal.valueOf(percentDiscount))).divide(BigDecimal.valueOf(100))));
-        setEstimatedTotal(getSubtotalDiscount());
+        this.subtotalDiscount = (this.estimatedTotal.subtract((this.estimatedTotal.multiply(BigDecimal.valueOf(percentDiscount))).divide(BigDecimal.valueOf(100))));
+        setEstimatedTotal(this.subtotalDiscount);
     }
 
     public BigDecimal getSubtotalDiscount() {
