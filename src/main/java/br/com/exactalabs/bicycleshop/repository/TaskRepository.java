@@ -4,6 +4,7 @@ import br.com.exactalabs.bicycleshop.entity.Task;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
+import java.util.Collection;
 
 public class TaskRepository {
 
@@ -20,5 +21,31 @@ public class TaskRepository {
         return this.entityManager.find(Task.class, id);
 
     }
+
+    public void insert(Task task) {
+        this.entityManager.getTransaction().begin();
+
+        this.entityManager.persist(task);
+
+        this.entityManager.getTransaction().commit();
+    }
+
+    public Task update(Task task) {
+        this.entityManager.getTransaction().begin();
+
+        var taskUpdated = this.entityManager.merge(task);
+
+        this.entityManager.getTransaction().commit();
+
+        return taskUpdated;
+    }
+
+    public Collection<Task> findAll() {
+        return this.entityManager
+                .createQuery("SELECT t FROM Task t", Task.class)
+                .getResultList();
+    }
+
+
 
 }

@@ -30,6 +30,7 @@ public class ProductCategoryRepository {
 
             PreparedStatement stmt = this.connection.prepareStatement(sql);
 
+
             stmt.setString(1, productCategory.getName());
             stmt.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now()));
 
