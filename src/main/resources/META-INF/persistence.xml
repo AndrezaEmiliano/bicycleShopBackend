@@ -8,6 +8,9 @@
         <description>Persistence Unit do Bicyle Shop</description>
         <class>br.com.exactalabs.bicycleshop.entity.Task</class>
         <class>br.com.exactalabs.bicycleshop.entity.Subtask</class>
+        <class>br.com.exactalabs.bicycleshop.entity.Cliente</class>
+        <class>br.com.exactalabs.bicycleshop.entity.PessoaFisica</class>
+        <class>br.com.exactalabs.bicycleshop.entity.PessoaJuridica</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>

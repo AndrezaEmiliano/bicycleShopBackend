@@ -23,11 +23,15 @@ public class TaskRepository {
     }
 
     public void insert(Task task) {
-        this.entityManager.getTransaction().begin();
+        try {
+            this.entityManager.getTransaction().begin();
 
-        this.entityManager.persist(task);
+            this.entityManager.persist(task);
 
-        this.entityManager.getTransaction().commit();
+            this.entityManager.getTransaction().commit();
+        } catch (Exception ex) {
+            throw ex;
+        }
     }
 
     public Task update(Task task) {

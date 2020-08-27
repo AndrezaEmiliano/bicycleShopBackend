@@ -1,19 +1,23 @@
 package br.com.exactalabs.bicycleshop;
 
-import br.com.exactalabs.bicycleshop.entity.Task;
-import br.com.exactalabs.bicycleshop.repository.TaskRepository;
+import br.com.exactalabs.bicycleshop.entity.PessoaFisica;
+import br.com.exactalabs.bicycleshop.repository.ClienteRepository;
 
 public class BicycleShopApplication {
 
     public static void main(String[] args) {
-        var taskRepository = new TaskRepository();
 
-        var taskAprenderJPA = taskRepository.findById(1L);
+        var clienteRepository = new ClienteRepository();
 
-        taskAprenderJPA.getSubtasks();
+        var cliente = clienteRepository.findById(1L);
+
+        var clientes = clienteRepository.findAll();
+
+        PessoaFisica pf = new PessoaFisica();
 
 
-        System.out.println(taskAprenderJPA);
+        System.out.println(cliente);
+        System.out.println(clientes);
 
     }
 

@@ -1,6 +1,10 @@
 package br.com.exactalabs.bicycleshop.entity;
 
+import org.hibernate.annotations.Columns;
+import org.hibernate.validator.constraints.br.CPF;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Collection;
 
 @Entity
@@ -11,6 +15,7 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Nome não pode ser nulo.")
     @Column(name = "description")
     private String name;
 
@@ -19,6 +24,12 @@ public class Task {
     @OneToMany
     @JoinColumn(name = "parent_task_id")
     private Collection<Subtask> subtasks;
+
+    public Task() {}
+
+    public Task(String name) {
+        this.name = name;
+    }
 
     public Long getId() {
         return id;

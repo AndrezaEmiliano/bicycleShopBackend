@@ -7,7 +7,6 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 
 public class ProductCategoryRepository {
 
@@ -24,7 +23,7 @@ public class ProductCategoryRepository {
         }
     }
 
-    public ProductCategory insert(ProductCategory productCategory) {
+    public ProductCategory save(ProductCategory productCategory) {
         try {
             String sql = "INSERT INTO " + TABLE_NAME + " (description, created_at) VALUES (?, ?)";
 
@@ -67,7 +66,7 @@ public class ProductCategoryRepository {
     }
 
     public void batchInsert(Collection<ProductCategory> productCategories) {
-        productCategories.forEach(this::insert);
+        productCategories.forEach(this::save);
     }
 
     public ProductCategory update(ProductCategory productCategory) {
