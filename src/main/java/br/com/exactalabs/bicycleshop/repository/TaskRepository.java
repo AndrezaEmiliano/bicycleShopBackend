@@ -1,64 +1,22 @@
 package br.com.exactalabs.bicycleshop.repository;
 
-import br.com.exactalabs.bicycleshop.entity.Subtask;
 import br.com.exactalabs.bicycleshop.entity.Task;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
-import java.util.Collection;
+import java.util.List;
 
-public class TaskRepository {
+@Repository
+public interface TaskRepository extends JpaRepository<Task, Long> {
 
-    private final EntityManager entityManager;
+    List<Task> findByDone(boolean done);
 
-    public TaskRepository() {
-        this.entityManager = Persistence
-                .createEntityManagerFactory("br.com.exactalabs.bicycleshop")
-                .createEntityManager();
-    }
+    List<Task> findByNameLikeOrderByNameAsc(String name);
 
-    public Task findById(Long id) {
+    @Query("SELECT t.name FROM Task t")
+    List<String> findAllTasksName();
 
-        return this.entityManager.find(Task.class, id);
-
-    }
-
-    public void insert(Task task) {
-        try {
-            this.entityManager.getTransaction().begin();
-
-            this.entityManager.persist(task);
-
-            this.entityManager.getTransaction().commit();
-        } catch (Exception ex) {
-            throw ex;
-        }
-    }
-
-    public Task update(Task task) {
-        this.entityManager.getTransaction().begin();
-
-        var taskUpdated = this.entityManager.merge(task);
-
-        this.entityManager.getTransaction().commit();
-
-        return taskUpdated;
-    }
-
-    public Collection<Task> findAll() {
-        return this.entityManager
-                .createQuery("SELECT t FROM Task t", Task.class)
-                .getResultList();
-    }
-
-
-    public void remove(Task task) {
-        this.entityManager.getTransaction().begin();
-
-        this.entityManager.remove(task);
-
-        this.entityManager.getTransaction().commit();
-    }
-
+    List<Task> findBySubtasksDone(boolean done);
 
 }

@@ -1,32 +1,29 @@
 package br.com.exactalabs.bicycleshop;
 
-import br.com.exactalabs.bicycleshop.entity.Subtask;
-import br.com.exactalabs.bicycleshop.entity.Task;
 import br.com.exactalabs.bicycleshop.repository.TaskRepository;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
 
+@SpringBootApplication
 public class BicycleShopApplication {
 
     public static void main(String[] args) {
+        SpringApplication.run(BicycleShopApplication.class, args);
+    }
 
-        var taskRepository = new TaskRepository();
+    @Bean
+    public CommandLineRunner run(ApplicationContext appContext) {
+        return args -> {
+            //Encarem como um construtor
+            TaskRepository taskRepository = appContext.getBean(TaskRepository.class);
 
-        var task = new Task("Aprender Mapeamento JPA");
+            System.out.println("Tasks que possuam subtasks pendentes:");
+            System.out.println(taskRepository.findBySubtasksDone(false));
 
-        var subtask = new Subtask();
-        subtask.setName("Aprender insert com cascade");
-
-        task.addSubtask(subtask);
-
-        taskRepository.insert(task);
-
-        var task15 = taskRepository.findById(16L);
-
-
-        System.out.println(task15);
-
-        taskRepository.remove(task15);
-
-
+        };
     }
 
 }

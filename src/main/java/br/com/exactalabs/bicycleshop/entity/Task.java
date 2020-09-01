@@ -67,7 +67,7 @@ public class Task {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", done=" + done +
-                ", subtasks=" + subtasks +
+                //", subtasks=" + subtasks +
                 '}';
     }
 
