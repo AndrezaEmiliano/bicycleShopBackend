@@ -1,10 +1,8 @@
 package br.com.exactalabs.bicycleshop.entity;
 
-import org.hibernate.annotations.Columns;
-import org.hibernate.validator.constraints.br.CPF;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
@@ -21,13 +19,17 @@ public class Task {
 
     private boolean done;
 
-    @OneToMany
-    @JoinColumn(name = "parent_task_id")
+    @OneToMany(mappedBy = "parentTask",
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL)
     private Collection<Subtask> subtasks;
 
-    public Task() {}
+    public Task() {
+        this.subtasks = new ArrayList<>();
+    }
 
     public Task(String name) {
+        this();
         this.name = name;
     }
 
@@ -59,17 +61,23 @@ public class Task {
         return subtasks;
     }
 
-    public void setSubtasks(Collection<Subtask> subtasks) {
-        this.subtasks = subtasks;
-    }
-
     @Override
     public String toString() {
         return "Task{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", done=" + done +
+                ", subtasks=" + subtasks +
                 '}';
+    }
+
+    public void setSubtasks(Collection<Subtask> subtasks) {
+        this.subtasks = subtasks;
+    }
+
+    public void addSubtask(Subtask subtask) {
+        subtask.setParentTask(this);
+        this.subtasks.add(subtask);
     }
 
 }

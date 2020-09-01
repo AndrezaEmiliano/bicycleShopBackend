@@ -1,5 +1,6 @@
 package br.com.exactalabs.bicycleshop.repository;
 
+import br.com.exactalabs.bicycleshop.entity.Subtask;
 import br.com.exactalabs.bicycleshop.entity.Task;
 
 import javax.persistence.EntityManager;
@@ -50,6 +51,14 @@ public class TaskRepository {
                 .getResultList();
     }
 
+
+    public void remove(Task task) {
+        this.entityManager.getTransaction().begin();
+
+        this.entityManager.remove(task);
+
+        this.entityManager.getTransaction().commit();
+    }
 
 
 }
