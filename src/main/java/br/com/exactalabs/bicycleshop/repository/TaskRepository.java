@@ -2,7 +2,6 @@ package br.com.exactalabs.bicycleshop.repository;
 
 import br.com.exactalabs.bicycleshop.entity.Task;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,9 +19,11 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
     Page<Task> findByNameLikeOrderByNameAsc(String name, Pageable pageRequest);
 
-    @Query("SELECT t.name FROM Task t")
+    @Query(value = "SELECT t.name FROM Task t")
     List<String> findAllTasksName();
 
     List<Task> findBySubtasksDone(boolean done);
+
+    Long countByDone(boolean done);
 
 }
