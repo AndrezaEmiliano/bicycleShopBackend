@@ -1,37 +1,52 @@
 package br.com.exactalabs.bicycleshop.entity;
 
+import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+
+
 import java.math.BigDecimal;
 
+@Entity
+@Table (name = "product")
 public class Products {
 
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotBlank (message = "A descrição do produto não pode ser nula!")
+    @Column (name = "description")
     private String name;
+
+    @Min(value = 0, message = "O preço do produto não pode ser negativo!")
+    @NotEmpty (message = "O preço do produto não pode ser nulo!")
     private BigDecimal price;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_category_id")
+    @Column (name = "category")
     private ProductCategory productCategory;
+
+    @Column (name = "quantity_product")
     private Integer quantityProduct;
-    private static int totalProduct;
+
 
 
     public Products() {
-        Products.totalProduct++;
     }
 
     public Products (String name, BigDecimal price, ProductCategory productCategory, Integer quantityProduct) {
-        this();
         this.name = name;
-        setPrice (price);
+        this.price = price;
         this.productCategory = productCategory;
         this.quantityProduct = quantityProduct;
     }
 
 
-    private void setPrice (BigDecimal price) throws PriceException {
-        if (price == null) {
-            throw new PriceException("O preço do produto não pode ser nulo!");
-        }
-        if (price.doubleValue() < 0) {
-            throw new PriceException("O preço do produto não pode ser negativo!");
-        }
-        this.price = price;
+    private void setPrice (BigDecimal price) {
+       this.price = price;
     }
 
     public String getName() {
@@ -50,9 +65,6 @@ public class Products {
         return quantityProduct;
     }
 
-    public static int getTotalProduct(){
-        return Products.totalProduct;
-    }
 
     public void setName(String name) {
         this.name = name;
