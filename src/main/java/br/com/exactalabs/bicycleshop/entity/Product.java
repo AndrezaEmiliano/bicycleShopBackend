@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table (name = "product")
-public class Products {
+public class Product {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
@@ -34,10 +34,10 @@ public class Products {
 
 
 
-    public Products() {
+    public Product() {
     }
 
-    public Products (String name, BigDecimal price, ProductCategory productCategory, Integer quantityProduct) {
+    public Product(String name, BigDecimal price, ProductCategory productCategory, Integer quantityProduct) {
         this.name = name;
         this.price = price;
         this.productCategory = productCategory;

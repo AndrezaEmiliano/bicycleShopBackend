@@ -15,10 +15,10 @@ public class ProductCategory {
     @Column (name = "description")
     private String name;
 
-    @OneToMany(mappedBy = "parentTask",
+    @OneToMany(mappedBy = "productCategory",
             fetch = FetchType.EAGER,
             cascade = CascadeType.ALL)
-    private List<Products> productsList = new ArrayList<>();
+    private List<Product> productList = new ArrayList<>();
 
 
     public ProductCategory() {
