@@ -18,15 +18,15 @@ public class Customer {
 
     @NotBlank (message = "Nome não pode ser nulo.")
     @Column (name = "first_name")
-    private String name;
+    private String firstName;
 
     @NotBlank (message = "O soberenome não pode ser nulo.")
     @Column (name = "last_name")
-    private String surname;
+    private String lastName;
 
     @NotNull (message = "A data não pode ser nula")
     @Past (message = "A data não é válida. Ela deve ser anterior a data de hoje.")
-    @Column (name = "birthday")
+    @Column (name = "date_of_birth")
     private LocalDate dateOfBirth;
 
     @NotBlank (message = "O CPF não pode ser nulo.")
@@ -36,10 +36,10 @@ public class Customer {
     private String email;
 
     @NotBlank (message = "O telefone não pode ser nulo")
-    @Column (name = "phone1")
+    @Column (name = "main_phone")
     private String mainPhone;
 
-    @Column (name = "phone2")
+    @Column (name = "second_phone")
     private String secondPhone;
 
     @NotEmpty (message = "O endereço não pode ser nulo")
@@ -51,8 +51,8 @@ public class Customer {
     }
 
     public Customer(String name, String surname, LocalDate dateOfBirth, String cpf, String email, String mainPhone, String secondPhone, Address address){
-        this.name = name;
-        this.surname = surname;
+        this.firstName = name;
+        this.lastName = surname;
         this.dateOfBirth = dateOfBirth;
         this.cpf = cpf;
         this.email = email;
@@ -69,20 +69,20 @@ public class Customer {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getSurname() {
-        return surname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public void setDateOfBirth(LocalDate dateOfBirth) {
@@ -144,8 +144,8 @@ public class Customer {
     public String toString() {
         return "Customer{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
+                ", name='" + firstName + '\'' +
+                ", surname='" + lastName + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
                 ", cpf='" + cpf + '\'' +
                 ", email='" + email + '\'' +
