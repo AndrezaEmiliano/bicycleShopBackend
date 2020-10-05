@@ -1,8 +1,12 @@
 package br.com.exactalabs.bicycleshop.service;
 
+
 import br.com.exactalabs.bicycleshop.entity.Product;
 import br.com.exactalabs.bicycleshop.repository.ProductRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class ProductService {
@@ -13,23 +17,39 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public Product
-
-
-    public Customer findCustomerById (Long id){
-        return this.customerRepository.findById(id).orElseThrow(() -> new RuntimeException("Cliente não encontrado.") );
+    public Page<Product> findAllProduct (Integer pageNumber){
+        var pageRequest =
+                PageRequest.of(pageNumber, 20);
+        return productRepository.findAll(pageRequest);
     }
 
-    public Customer saveCustomer (Customer customer){
-        return this.customerRepository.save(customer);
+    public Product findProductByIdProduct (Long id){
+        return this.productRepository.findById(id).orElseThrow(() -> new RuntimeException("Produto não encontrado."));
     }
 
-    public Page<Customer> findAllCustomer (Integer pageNumber){
-        var pageRequest = PageRequest.of(pageNumber, 20);
-        return this.customerRepository.findAll(pageRequest);
+    public Page<Product> findProductByNameAsc(String description, Integer pageNumber) {
+        var pageRequest =
+                PageRequest.of(pageNumber, 20);
+        return this.productRepository.findAllProductByDescriptionLikeOrderByDescriptionAsc(description, pageRequest);
     }
 
-    public void deleteCustomerById (Long id){
-        this.customerRepository.deleteById(id);
+//    public Page <Product> findProductByPriceAsc (Integer pageNumber) {
+//        var pageRequest =
+//                PageRequest.of(pageNumber, 20);
+//        return this.productRepository.findAllProductByOrderByPriceAsc(pageRequest);
+//    }
+//
+//    public Page <Product> findProductByPriceDesc (Integer pageNumber) {
+//        var pageRequest =
+//                PageRequest.of(pageNumber, 20);
+//        return this.productRepository.findAllProductByOrderByPriceDesc(pageRequest);
+//    }
+
+    public Product saveProduct (Product product){
+        return this.productRepository.save(product);
+    }
+
+    public void deleteProductById (Long id){
+        this.productRepository.deleteById(id);
     }
 }

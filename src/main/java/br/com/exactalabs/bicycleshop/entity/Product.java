@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 
 import java.math.BigDecimal;
@@ -18,17 +19,18 @@ public class Product {
 
     @NotBlank (message = "A descrição do produto não pode ser nula!")
     @Column (name = "description")
-    private String name;
+    private String description;
 
     @Min(value = 0, message = "O preço do produto não pode ser negativo!")
-    @NotEmpty (message = "O preço do produto não pode ser nulo!")
+    @NotNull(message = "O preço do produto não pode ser nulo!")
     private BigDecimal price;
 
+    @NotNull (message = "O produto precisa ser cadastrado em uma categoria válida!")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_category_id")
-    @Column (name = "category")
     private ProductCategory productCategory;
 
+    @Min(value = 0, message = "A quantidade do produto não pode ser negativa!")
     @Column (name = "quantity_product")
     private Integer quantityProduct;
 
@@ -37,11 +39,11 @@ public class Product {
     public Product() {
     }
 
-    public Product(String name, BigDecimal price, ProductCategory productCategory, Integer quantityProduct) {
-        this.name = name;
+    public Product(String description, BigDecimal price, Integer quantityProduct, ProductCategory productCategory) {
+        this.description = description;
         this.price = price;
-        this.productCategory = productCategory;
         this.quantityProduct = quantityProduct;
+        this.productCategory = productCategory;
     }
 
 
@@ -49,8 +51,8 @@ public class Product {
        this.price = price;
     }
 
-    public String getName() {
-        return this.name;
+    public String getDescription() {
+        return this.description;
     }
 
     public BigDecimal getPrice() {
@@ -66,8 +68,8 @@ public class Product {
     }
 
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setProductCategory(ProductCategory productCategory) {
@@ -80,5 +82,16 @@ public class Product {
 
     public void setDiscount (BigDecimal percentDiscount) {
         this.price = (price.subtract ((price.multiply(percentDiscount)).divide(BigDecimal.valueOf(100))));
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", productCategory=" + productCategory +
+                ", quantityProduct=" + quantityProduct +
+                '}';
     }
 }
