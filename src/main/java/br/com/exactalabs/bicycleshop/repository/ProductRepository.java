@@ -12,7 +12,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     Page<Product> findAllProductByDescriptionLikeOrderByDescriptionAsc(String description, Pageable pageRequest);
 
-//    Page<Product> findAllProductByOrderByPriceAsc(Pageable pageRequest);
-//
+    Page<Product> findAllProductByOrderByPriceAsc(Pageable pageRequest);
+
 //    Page<Product> findAllProductByOrderByPriceDesc(Pageable pageRequest);
 }

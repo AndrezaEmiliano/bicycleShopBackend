@@ -33,12 +33,13 @@ public class ProductService {
         return this.productRepository.findAllProductByDescriptionLikeOrderByDescriptionAsc(description, pageRequest);
     }
 
-//    public Page <Product> findProductByPriceAsc (Integer pageNumber) {
-//        var pageRequest =
-//                PageRequest.of(pageNumber, 20);
-//        return this.productRepository.findAllProductByOrderByPriceAsc(pageRequest);
-//    }
-//
+    public Page <Product> findAllProductByPriceAsc (Integer pageNumber) {
+        var pageRequest =
+                PageRequest.of(pageNumber, 20);
+        return this.productRepository.findAllProductByOrderByPriceAsc(pageRequest);
+    }
+
+
 //    public Page <Product> findProductByPriceDesc (Integer pageNumber) {
 //        var pageRequest =
 //                PageRequest.of(pageNumber, 20);

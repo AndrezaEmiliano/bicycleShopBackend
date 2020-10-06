@@ -1,8 +1,6 @@
 package br.com.exactalabs.bicycleshop;
 
-import br.com.exactalabs.bicycleshop.entity.Product;
-import br.com.exactalabs.bicycleshop.entity.ProductCategory;
-import br.com.exactalabs.bicycleshop.service.ProductCategoryService;
+
 import br.com.exactalabs.bicycleshop.service.ProductService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -24,7 +22,7 @@ public class BicycleShopApplication {
         return args -> {
             // como construtor
             ProductService productService = appContext.getBean(ProductService.class);
-            ProductCategoryService productCategoryService = appContext.getBean(ProductCategoryService.class);
+//            ProductCategoryService productCategoryService = appContext.getBean(ProductCategoryService.class);
 
 //            var productCategory = new ProductCategory("garrafa");
 //
@@ -34,9 +32,15 @@ public class BicycleShopApplication {
 //
 //            productService.saveProduct(product);
 
-            System.out.println(productService.findProductByNameAsc("%bic%", 0).getContent());
+            System.out.println(productService.findProductByNameAsc("%luv%", 0).getContent());
 
-//            System.out.println(productService.findProductByPriceAsc(0).getContent());
+//            System.out.println(productService.findAllProductByPriceAsc(0).getContent());
+
+//
+
+//            productService.deleteProductById(14L);
+
+//            System.out.println(productService.findProductByNameAsc("%cap%", 0).getContent());
         };
     }
 }
