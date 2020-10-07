@@ -5,7 +5,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-
 import java.math.BigDecimal;
 
 @Entity
@@ -25,15 +24,13 @@ public class Product {
     private BigDecimal price;
 
     @NotNull (message = "O produto precisa ser cadastrado em uma categoria válida!")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_category_id")
     private ProductCategory productCategory;
 
     @Min(value = 0, message = "A quantidade do produto não pode ser negativa!")
     @Column (name = "quantity_product")
     private Integer quantityProduct;
-
-
 
     public Product() {
     }
@@ -44,7 +41,6 @@ public class Product {
         this.quantityProduct = quantityProduct;
         this.productCategory = productCategory;
     }
-
 
     private void setPrice (BigDecimal price) {
        this.price = price;

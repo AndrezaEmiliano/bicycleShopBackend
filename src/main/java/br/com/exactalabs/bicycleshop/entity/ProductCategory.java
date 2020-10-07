@@ -18,7 +18,6 @@ public class ProductCategory {
     private String description;
 
     @OneToMany(mappedBy = "productCategory",
-            fetch = FetchType.EAGER,
             cascade = CascadeType.REMOVE)
     private List<Product> productList = new ArrayList<>();
 
@@ -29,7 +28,6 @@ public class ProductCategory {
     public ProductCategory(String description) {
         this.description = description;
     }
-
 
     public String getDescription() {
         return description;
@@ -44,7 +42,6 @@ public class ProductCategory {
         return "ProductCategory{" +
                 "id=" + id +
                 ", description='" + description + '\'' +
-                ", productList=" + productList +
                 '}';
     }
 }
