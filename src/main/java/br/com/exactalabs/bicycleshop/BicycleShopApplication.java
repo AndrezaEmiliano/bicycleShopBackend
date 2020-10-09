@@ -27,6 +27,44 @@ public class BicycleShopApplication {
     @Bean
     public CommandLineRunner run(ApplicationContext appContext) {
         return args -> {
+
+            //===================================Customer and Adress===================================
+
+            //como um construtor
+            CustomerService customerService = appContext.getBean(CustomerService.class);
+
+            //cadastro de endereço
+//            var address = new Address("14800000", "Rua fulana", "222",
+//                    "Centro", "SP", "Araraquara", "nao tem");
+
+            //cadastro de cliente
+//            var customer = new Customer ("Sophie", "Emiliano", LocalDate.of(2020, 9, 5), "30000106829",
+//                    "sophie.clinicageral@gmail.com", "16 900999090", " 16 999990000", address);
+
+            //salva cliente
+//            customerService.saveCustomer(customer);
+
+            //busca cliente por id
+//            System.out.println(customerService.findCustomerById(6L));
+
+            //busca todos os clientes
+//            System.out.println(customerService.findAllCustomer(0).getContent());
+
+            //deleta clientes por id
+//            customerService.deleteCustomerById(1L);
+
+            //update cliente
+//            var customerUpdate = customerService.findCustomerById(7L);
+//            customerUpdate.setName("Amorinha");
+//            customerService.saveCustomer(customerUpdate);
+
+            //update endereço
+//            var adressUpdate = customerUpdate.getAddress().get(0);
+//            adressUpdate.setAddressNumber("22");
+//            customerService.saveCustomer(customerUpdate);
+
+            //===================================Product and ProductCategory===================================
+
             // como construtor
             ProductService productService = appContext.getBean(ProductService.class);
             ProductCategoryService productCategoryService = appContext.getBean(ProductCategoryService.class);
@@ -77,34 +115,5 @@ public class BicycleShopApplication {
             System.out.println(productService.findAllProductByProductCategoryDescription
                     ("bicicleta", 0).getContent());
         };
-    }
-}
-
-            //Encarem como um construtor
-            CustomerService customerService = appContext.getBean(CustomerService.class);
-            //System.out.println(customerService.findCustomerById(6L));
-
-            var address = new Address("14800000", "Rua fulana", "222",
-                    "Centro", "SP", "Araraquara", "nao tem");
-            var customer = new Customer ("Sophie", "Emiliano", LocalDate.of(2020, 9, 5), "30000106829",
-                    "sophie.clinicageral@gmail.com", "16 900999090", " 16 999990000", address);
-
-           //customerService.saveCustomer(customer);
-
-            System.out.println(customerService.findAllCustomer(0).getContent());
-
-           // customerService.deleteCustomerById(1L);
-
-            //update
-//            var customerUpdate = customerService.findCustomerById(7L);
-////            customerUpdate.setName("Amorinha");
-////            customerService.saveCustomer(customerUpdate);
-//
-//
-//            var adressUpdate = customerUpdate.getAddress().get(0);
-//            adressUpdate.setAddressNumber("22");
-//            customerService.saveCustomer(customerUpdate);
-        };
-    }
-
+    };
 }
