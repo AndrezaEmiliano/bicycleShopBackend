@@ -1,79 +1,94 @@
 package br.com.exactalabs.bicycleshop.entity;
-import java.math.BigDecimal;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
+import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Table(name = "order")
 public class Order {
 
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column (name = "when_made")
+    private LocalDate whenMade;
+
+    @NotNull (message = "O cliente não pode ser nulo")
+    @JoinColumn (name = "customer_id")
+    @OneToOne
     private Customer customer;
-    private PaymentMethod paymentMethod;
-    private Product product;
-    private Integer quantity;
+
+    @Min(value = 0, message = "O valor da compra não pode ser negativo!")
+    @Column (name = "estimated_total")
     private BigDecimal estimatedTotal;
+
+    @Column (name = "subtotal_discount")
     private BigDecimal subtotalDiscount;
+
+    @NotEmpty(message = "Não se pode realizar um pedido sem itens")
+    @JoinColumn(name = "order_id")
+    @OneToMany(cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<OrderItem> orderItems = new ArrayList<>();
 
 
     public Order() {
+        this.whenMade = LocalDate.now();
+        this.subtotalDiscount = BigDecimal.valueOf(0);
     }
 
-    public Order(Customer customer, Product product, Integer quantity, PaymentMethod paymentMethod) {
+    public Order(Customer customer, OrderItem orderItem) {
+        this();
         this.customer = customer;
-        this.product = product;
-        this.quantity = quantity;
-        this.paymentMethod = paymentMethod;
-        getEstimatedTotal();
+        this.addOrderedItem(orderItem);
+        this.getEstimatedTotal (orderItem);
     }
 
+
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public LocalDate getWhenMade() {
+        return whenMade;
+    }
+
+    public void setWhenMade(LocalDate whenMade) {
+        this.whenMade = whenMade;
+    }
 
     public Customer getCustomer() {
         return this.customer;
     }
 
-    public PaymentMethod getPaymentMethod() {
-        return this.paymentMethod;
-    }
-
-    public Product getProduct() {
-        return this.product;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
 
-    public void setPaymentMethod(PaymentMethod paymentMethod) {
-        this.paymentMethod = paymentMethod;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-
-    public void decreaseQuantity() throws QuantityException {
-        if (this.product == null){
-            throw new QuantityException("Produto não cadastrado");
-        }
-        if (this.quantity == null){
-            throw new QuantityException("A quantidade de produto a ser comprada não é suficiente para esta compra");
-        }
-        if (this.product.getQuantityProduct() < this.quantity || this.product.getQuantityProduct() == null){
-            throw new QuantityException("A quantidade de produto é insuficiênte para esta compra!");
-        }
-        this.product.setQuantityProduct(this.product.getQuantityProduct()-this.quantity);
-    }
-
-    private BigDecimal getEstimatedTotal () {
-        this.decreaseQuantity();
-        this.estimatedTotal = (this.getProduct().getPrice().multiply(BigDecimal.valueOf(this.getQuantity())));
-        this.paymentMethod.setValue(this.estimatedTotal);
+    private BigDecimal getEstimatedTotal (OrderItem orderItem) {
+        orderItem.decreaseQuantity();
+        this.estimatedTotal = (orderItem.getProduct().getPrice().multiply(BigDecimal.valueOf(orderItem.getQuantity())));
         return this.estimatedTotal;
     }
 
@@ -83,15 +98,33 @@ public class Order {
 
     public void setEstimatedTotal(BigDecimal estimatedTotal) {
         this.estimatedTotal = estimatedTotal;
-        this.paymentMethod.setValue(this.estimatedTotal);
     }
 
     public void setSubtotalDiscount (Integer percentDiscount) {
-        this.subtotalDiscount = (this.estimatedTotal.subtract((this.estimatedTotal.multiply(BigDecimal.valueOf(percentDiscount))).divide(BigDecimal.valueOf(100))));
+        this.subtotalDiscount = (this.estimatedTotal.subtract((this.estimatedTotal.multiply(BigDecimal.valueOf(percentDiscount))).
+                divide(BigDecimal.valueOf(100))));
         setEstimatedTotal(this.subtotalDiscount);
     }
 
     public BigDecimal getSubtotalDiscount() {
         return subtotalDiscount;
+    }
+
+    public void addOrderedItem(OrderItem orderItem) {
+        if (orderItem != null) {
+            this.orderItems.add(orderItem);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", whenMade=" + whenMade +
+                ", customer=" + customer +
+                ", estimatedTotal=" + estimatedTotal +
+                ", subtotalDiscount=" + subtotalDiscount +
+                ", orderItems=" + orderItems +
+                '}';
     }
 }

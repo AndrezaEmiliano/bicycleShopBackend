@@ -1,10 +1,14 @@
 package br.com.exactalabs.bicycleshop.entity;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class CreditCard extends PaymentMethod {
 
     private String cardNumber;
+    @FutureOrPresent (message = "O cartão está com a validade expirada")
+    @NotNull (message = "O cartão não pode ter a data de validade nula.")
     private LocalDate expDate;
     private int cvv;
     private String cardName;
@@ -48,16 +52,9 @@ public class CreditCard extends PaymentMethod {
         this.cardNumber = cardNumber;
     }
 
-    public void setExpDate(LocalDate expDate) throws ExpDateException{
-        if (expDate == null){
-            throw new ExpDateException("O cartão não pode ter a data de validade nula.");
-        }
-        if (expDate.isBefore(LocalDate.now())){
-            throw new ExpDateException("O cartão está com a validade expirada");
-        }
+    public void setExpDate(LocalDate expDate) {
         this.expDate = expDate;
     }
-
 
     public void setCvv(int cvv) {
         this.cvv = cvv;
