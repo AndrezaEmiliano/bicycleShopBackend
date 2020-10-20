@@ -7,6 +7,8 @@ import br.com.exactalabs.bicycleshop.service.ProductService;
 import br.com.exactalabs.bicycleshop.entity.Address;
 import br.com.exactalabs.bicycleshop.entity.Customer;
 import br.com.exactalabs.bicycleshop.service.CustomerService;
+import br.com.exactalabs.bicycleshop.entity.*;
+import br.com.exactalabs.bicycleshop.service.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,7 +23,6 @@ public class BicycleShopApplication {
 
     public static void main(String[] args) {
      SpringApplication.run(BicycleShopApplication.class, args);
-        SpringApplication.run(BicycleShopApplication.class, args);
     }
 
     @Bean
@@ -112,8 +113,32 @@ public class BicycleShopApplication {
 
 
             //busca produto (em ordem alfabética) por nome de categoria de produto
-            System.out.println(productService.findAllProductByProductCategoryDescription
-                    ("bicicleta", 0).getContent());
+//            System.out.println(productService.findAllProductByProductCategoryDescription
+//                    ("bicicleta", 0).getContent());
+
+
+            //===================================Order and OrderItem===================================
+
+            //como um construtor
+            OrderService orderService = appContext.getBean(OrderService.class);
+//            OrderItemService orderItemService = appContext.getBean(OrderItemService.class);
+
+            //cadastro de Order e OrderItem
+//            var order = new Order(customerService.findCustomerById(7L), new OrderItem(productService.findProductByIdProduct(11L), 2));
+
+
+            //salva Order e OrderItem
+//            orderService.saveOrder(order);
+
+            //busca Order por id
+            System.out.println(orderService.findOrderById(9L));
+
+            //busca todos as Orders
+//            System.out.println(orderService.findAllOrder(0).getContent());
+
+            //deleta Order por id
+//            orderService.deleteOrderById(8L);
+
         };
     };
 }
