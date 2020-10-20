@@ -1,5 +1,12 @@
 package br.com.exactalabs.bicycleshop;
 
+import br.com.exactalabs.bicycleshop.entity.Product;
+import br.com.exactalabs.bicycleshop.entity.ProductCategory;
+import br.com.exactalabs.bicycleshop.service.ProductCategoryService;
+import br.com.exactalabs.bicycleshop.service.ProductService;
+import br.com.exactalabs.bicycleshop.entity.Address;
+import br.com.exactalabs.bicycleshop.entity.Customer;
+import br.com.exactalabs.bicycleshop.service.CustomerService;
 import br.com.exactalabs.bicycleshop.entity.*;
 import br.com.exactalabs.bicycleshop.service.*;
 import org.springframework.boot.CommandLineRunner;
