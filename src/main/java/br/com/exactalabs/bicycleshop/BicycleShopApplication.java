@@ -131,7 +131,7 @@ public class BicycleShopApplication {
 //            orderService.saveOrder(order);
 
             //busca Order por id
-            System.out.println(orderService.findOrderById(9L));
+//            System.out.println(orderService.findOrderById(9L));
 
             //busca todos as Orders
 //            System.out.println(orderService.findAllOrder(0).getContent());
